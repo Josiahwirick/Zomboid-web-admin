@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block login %}
+<section class="card login-card">
+  <h1>Zomboid Admin</h1>
+  <p class="muted">Sign in to manage sandbox, workshop mods, and the dedicated server.</p>
+  {% if error %}
+  <div class="flash error">{{ error }}</div>
+  {% endif %}
+  <form method="post" action="/login" class="stack">
+    <label>
+      Username
+      <input type="text" name="username" autocomplete="username" required>
+    </label>
+    <label>
+      Password
+      <input type="password" name="password" autocomplete="current-password" required>
+    </label>
+    <button type="submit" class="btn primary">Log in</button>
+  </form>
+</section>
+{% endblock %}

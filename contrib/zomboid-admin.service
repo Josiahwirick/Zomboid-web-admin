@@ -1,0 +1,13 @@
+[Unit]
+Description=Zomboid Admin Dashboard
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/Zomboid-web
+EnvironmentFile=/opt/Zomboid-web/.env
+ExecStart=/opt/Zomboid-web/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8080
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

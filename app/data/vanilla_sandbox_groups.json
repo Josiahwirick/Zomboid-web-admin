@@ -1,0 +1,187 @@
+{
+  "groups": [
+    {
+      "id": "population",
+      "label": "Population",
+      "keys": [
+        "Zombies",
+        "Distribution",
+        "ZombieConfig",
+        "PopulationMultiplier",
+        "PopulationStartMultiplier",
+        "PopulationPeakMultiplier",
+        "PopulationPeakDay",
+        "RespawnHours",
+        "RespawnUnseenHours",
+        "RespawnMultiplier",
+        "RedistributeHours"
+      ]
+    },
+    {
+      "id": "time",
+      "label": "Time",
+      "keys": [
+        "DayLength",
+        "StartYear",
+        "StartMonth",
+        "StartDay",
+        "StartTime",
+        "TimeSinceApo",
+        "NightLength",
+        "NightDarkness"
+      ]
+    },
+    {
+      "id": "world",
+      "label": "World",
+      "keys": [
+        "WaterShut",
+        "ElecShut",
+        "WaterShutModifier",
+        "ElecShutModifier",
+        "Alarm",
+        "LockedHouses",
+        "MetaEvent",
+        "SleepingEvent",
+        "GeneratorSpawning",
+        "GeneratorFuelConsumption",
+        "SurvivorHouseChance",
+        "VehicleStoryChance",
+        "AnnotatedMapChance",
+        "HoursForCorpseRemoval",
+        "DecayingCorpseHealthImpact",
+        "BloodLevel",
+        "DecayingCorpseHealthImpact",
+        "FireSpread",
+        "AllowExteriorGenerator",
+        "MaxFogIntensity",
+        "MaxRainFxIntensity",
+        "EnableSnowOnGround",
+        "EnableTaintedWaterText",
+        "MultiHitZombies",
+        "RearDamagePlayer",
+        "AttackBlockMovements",
+        "AllClothesUnlocked",
+        "CarSpawnRate",
+        "ChanceHasGas",
+        "InitialGas",
+        "LockedCar",
+        "CarGasConsumption",
+        "Map"
+      ]
+    },
+    {
+      "id": "nature",
+      "label": "Nature",
+      "keys": [
+        "Temperature",
+        "Rain",
+        "ErosionSpeed",
+        "ErosionDays",
+        "NatureAbundance",
+        "Farming",
+        "PlantResilience",
+        "PlantAbundance",
+        "CompostTime",
+        "MaxFog",
+        "DaysForRottenFoodRemoval"
+      ]
+    },
+    {
+      "id": "loot",
+      "label": "Loot",
+      "keys": [
+        "FoodLoot",
+        "CannedFoodLoot",
+        "LiteratureLoot",
+        "SurvivalGearsLoot",
+        "MedicalLoot",
+        "WeaponLoot",
+        "RangedWeaponLoot",
+        "AmmoLoot",
+        "MechanicsLoot",
+        "OtherLoot",
+        "LootRespawn",
+        "SeenHoursPreventLootRespawn",
+        "WorldItemRemovalList",
+        "HoursForLootRespawn",
+        "MaxItemsForLootRespawn",
+        "ConstructionPreventsLootRespawn",
+        "ZombieLoot"
+      ]
+    },
+    {
+      "id": "character",
+      "label": "Character",
+      "keys": [
+        "XpMultiplier",
+        "XpMultiplierBonus",
+        "StatsDecrease",
+        "EndRegen",
+        "Nutrition",
+        "FoodRotSpeed",
+        "FridgeFactor",
+        "StarterKit",
+        "Nutrition",
+        "CharacterFreePoints",
+        "ConstructionBonusPoints",
+        "InjurySeverity",
+        "BoneFracture",
+        "ClothingDegradation",
+        "CatchACold",
+        "WoundInfection",
+        "DiscomfortFactor",
+        "PovertyFactor"
+      ]
+    },
+    {
+      "id": "vehicles",
+      "label": "Vehicles",
+      "keys": [
+        "EnableVehicles",
+        "VehicleEasyUse",
+        "RecentlySurvivorVehicles",
+        "ZombieAttractionMultiplier",
+        "VehicleStory"
+      ]
+    },
+    {
+      "id": "zombie_lore",
+      "label": "Zombie lore",
+      "keys": ["ZombieLore"]
+    },
+    {
+      "id": "zombie_advanced",
+      "label": "Zombie advanced",
+      "keys": [
+        "FollowSoundDistance",
+        "RallyGroupSize",
+        "RallyTravelDistance",
+        "RallyGroupSeparation",
+        "RallyGroupRadius",
+        "ZombiesRespawn"
+      ]
+    },
+    {
+      "id": "b42",
+      "label": "Build 42 extras",
+      "keys": [
+        "AnimalStats",
+        "AnimalMeta",
+        "AnimalSoundAttract",
+        "AnimalSoundAttractMax",
+        "AnimalSoundAttractCooldown",
+        "AnimalGrassRegrow",
+        "AnimalPregnancyTime",
+        "AnimalAgeSpeed",
+        "AnimalMilkInc",
+        "AnimalWoolInc",
+        "KillAnimalFeed",
+        "Basement",
+        "Darkness",
+        "LightBulbLifespan",
+        "MaximumLooted"
+      ]
+    }
+  ]
+}

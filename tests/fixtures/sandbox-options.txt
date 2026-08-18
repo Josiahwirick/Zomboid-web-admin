@@ -1,0 +1,28 @@
+VERSION = 1,
+
+option CoolMod.LootRate
+{
+    type = integer,
+    default = 50,
+    min = 0,
+    max = 100,
+    page = CoolWeapons,
+    translation = CoolMod_LootRate,
+}
+
+option CoolMod.EnableGuns
+{
+    type = boolean,
+    default = true,
+    page = CoolWeapons,
+    translation = CoolMod_EnableGuns,
+}
+
+option CoolMod.Rarity
+{
+    type = enum,
+    default = 2,
+    numValues = 3,
+    page = CoolWeapons,
+    translation = CoolMod_Rarity,
+}

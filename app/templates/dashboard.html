@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Dashboard</h1>
+    <p class="muted">{{ public_name }}</p>
+  </div>
+</div>
+
+<div id="status-panel" hx-get="/partials/status" hx-trigger="every 8s" hx-swap="outerHTML">
+  {% include "partials/status.html" %}
+</div>
+
+<section class="card">
+  <h2>Recent log</h2>
+  {% if log_tail %}
+  <pre class="log">{{ log_tail }}</pre>
+  {% else %}
+  <p class="muted">No log output found under Logs/ or server-console.txt.</p>
+  {% endif %}
+</section>
+{% endblock %}

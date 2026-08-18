@@ -1,0 +1,9 @@
+<div class="save-bar">
+  {% if running %}
+  <p class="muted">Server is online. Saving without a restart would be overwritten when Project Zomboid shuts down.</p>
+  <button type="submit" name="restart" value="1" class="btn primary" data-confirm="Stop the server, write config, then start it again?">Save and restart</button>
+  {% else %}
+  <button type="submit" name="restart" value="0" class="btn">Save (server is stopped)</button>
+  <button type="submit" name="restart" value="1" class="btn primary">Save and start</button>
+  {% endif %}
+</div>

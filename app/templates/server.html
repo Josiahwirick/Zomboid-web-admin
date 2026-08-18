@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Server settings</h1>
+    <p class="muted">{{ ini_path }}</p>
+  </div>
+</div>
+
+{% if missing %}
+<div class="flash error">Could not find {{ ini_path }}. Set ZOMBOID_HOME and PZ_SERVER_NAME in .env.</div>
+{% else %}
+<form method="post" action="/server" class="stack">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+
+  <section class="card">
+    <h2>Basics</h2>
+    <div class="form-grid">
+      {% for field in curated %}
+        {% if field.type == "bool" %}
+        <label class="check">
+          <input type="hidden" name="{{ field.key }}" value="false">
+          <input type="checkbox" name="{{ field.key }}" value="true" {% if field.value|lower == "true" %}checked{% endif %}>
+          <span>
+            {{ field.label }}
+            <small>{{ field.help }}</small>
+          </span>
+        </label>
+        {% elif field.type == "textarea" %}
+        <label class="span-2">
+          {{ field.label }}
+          <textarea name="{{ field.key }}" rows="3">{{ field.value }}</textarea>
+          <small>{{ field.help }}</small>
+        </label>
+        {% elif field.type == "password" %}
+        <label>
+          {{ field.label }}
+          <input type="text" name="{{ field.key }}" value="{{ field.value }}" autocomplete="off">
+          <small>{{ field.help }}</small>
+        </label>
+        {% else %}
+        <label>
+          {{ field.label }}
+          <input type="{% if field.type == 'number' %}number{% else %}text{% endif %}" name="{{ field.key }}" value="{{ field.value }}">
+          <small>{{ field.help }}</small>
+        </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Advanced</h2>
+    <p class="muted">Every other key from the .ini, left in file order. Workshop and Mods are edited on the Workshop page.</p>
+    <input type="search" class="filter" data-filter="#advanced-list" placeholder="Filter keys…">
+    <div id="advanced-list" class="form-grid compact">
+      {% for field in advanced %}
+      <label data-filter-text="{{ field.key }}">
+        {{ field.key }}
+        <input type="text" name="adv.{{ field.key }}" value="{{ field.value }}">
+      </label>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% include "partials/save_bar.html" %}
+</form>
+{% endif %}
+{% endblock %}

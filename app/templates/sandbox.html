@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Sandbox</h1>
+    <p class="muted">{{ sandbox_path }}</p>
+  </div>
+</div>
+
+{% if missing %}
+<div class="flash error">Could not find {{ sandbox_path }}.</div>
+{% elif parse_error %}
+<div class="flash error">Could not parse SandboxVars.lua: {{ parse_error }}</div>
+{% else %}
+<form method="post" action="/sandbox" class="stack">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+
+  <div class="toc">
+    {% for section in sections %}
+    <a href="#{{ section.id }}">{{ section.label }}</a>
+    {% endfor %}
+  </div>
+
+  {% for section in sections %}
+  <section class="card" id="{{ section.id }}">
+    <h2>
+      {{ section.label }}
+      {% if section.source == "mod" %}<span class="tag">mod</span>{% endif %}
+      {% if section.source == "other" %}<span class="tag">other</span>{% endif %}
+    </h2>
+    <div class="form-grid">
+      {% for field in section.fields %}
+        {% if field.kind == "bool" %}
+        <label class="check">
+          <input type="hidden" name="sv.{{ field.path }}" value="false">
+          <input type="checkbox" name="sv.{{ field.path }}" value="true" {% if field.value %}checked{% endif %}>
+          <span>
+            {{ field.label }}
+            {% if field.help %}<small>{{ field.help }}</small>{% endif %}
+          </span>
+        </label>
+        {% elif field.kind == "enum" %}
+        <label>
+          {{ field.label }}
+          <select name="sv.{{ field.path }}">
+            {% for label in field.enum_labels %}
+            <option value="{{ loop.index }}" {% if field.value == loop.index %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+            {% if not field.enum_labels %}
+            <option value="{{ field.value }}" selected>{{ field.value }}</option>
+            {% endif %}
+          </select>
+          {% if field.help %}<small>{{ field.help }}</small>{% endif %}
+        </label>
+        {% elif field.kind in ["int", "float"] %}
+        <label>
+          {{ field.label }}
+          <input
+            type="number"
+            name="sv.{{ field.path }}"
+            value="{{ field.value }}"
+            {% if field.min is not none %}min="{{ field.min }}"{% endif %}
+            {% if field.max is not none %}max="{{ field.max }}"{% endif %}
+            {% if field.kind == "float" %}step="any"{% endif %}
+          >
+          {% if field.help %}<small>{{ field.help }}</small>{% endif %}
+        </label>
+        {% else %}
+        <label class="span-2">
+          {{ field.label }}
+          <input type="text" name="sv.{{ field.path }}" value="{{ field.value }}">
+          {% if field.help %}<small>{{ field.help }}</small>{% endif %}
+        </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+
+  {% include "partials/save_bar.html" %}
+</form>
+{% endif %}
+{% endblock %}

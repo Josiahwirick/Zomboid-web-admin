@@ -1,0 +1,8 @@
+Sandbox_CoolWeapons = "Cool Weapons",
+Sandbox_CoolMod_LootRate = "Loot rate",
+Sandbox_CoolMod_LootRate_tooltip = "Percent chance for extra loot.",
+Sandbox_CoolMod_EnableGuns = "Enable guns",
+Sandbox_CoolMod_Rarity = "Rarity",
+Sandbox_CoolMod_Rarity_option1 = "Rare",
+Sandbox_CoolMod_Rarity_option2 = "Normal",
+Sandbox_CoolMod_Rarity_option3 = "Common",

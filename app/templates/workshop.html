@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Workshop and mods</h1>
+    <p class="muted">WorkshopItems downloads packages; Mods enables internal IDs. Load order is top to bottom.</p>
+  </div>
+</div>
+
+{% if missing %}
+<div class="flash error">Could not find {{ ini_path }}.</div>
+{% else %}
+<form method="post" action="/workshop" class="stack" id="workshop-form">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+
+  <section class="card">
+    <h2>Add Workshop item</h2>
+    <div class="inline-add">
+      <input type="text" name="add_workshop" placeholder="Workshop URL or numeric ID">
+      {% if running %}
+      <button type="submit" name="restart" value="1" class="btn primary" data-confirm="Add this item and restart so Steam can download it?">Add and restart</button>
+      {% else %}
+      <button type="submit" name="restart" value="0" class="btn primary">Add</button>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Workshop items</h2>
+    <ol id="workshop-list" class="pack-list" data-sortable>
+      {% for item in items %}
+      <li class="pack" draggable="true">
+        <input type="hidden" name="workshop_ids" value="{{ item.workshop_id }}">
+        <div class="pack-head">
+          <button type="button" class="icon-btn move-up" title="Move up">↑</button>
+          <button type="button" class="icon-btn move-down" title="Move down">↓</button>
+          <div>
+            <strong>{{ item.title or "(unknown title)" }}</strong>
+            <div class="muted">Workshop ID {{ item.workshop_id }} · <a href="https://steamcommunity.com/sharedfiles/filedetails/?id={{ item.workshop_id }}" target="_blank" rel="noreferrer">Steam</a></div>
+          </div>
+          <button type="button" class="btn danger small remove-row">Remove</button>
+        </div>
+        {% if item.warning %}
+        <p class="warn-line">{{ item.warning }}</p>
+        {% endif %}
+        {% if item.mods %}
+        <div class="mod-checks">
+          {% for mod in item.mods %}
+          <label class="check">
+            <input type="checkbox" name="mod_ids" value="{{ mod.mod_id }}" {% if mod.mod_id in enabled_set %}checked{% endif %}>
+            <span>
+              <code>{{ mod.mod_id }}</code> {{ mod.name }}
+              {% if mod.require %}<small>requires {{ mod.require | join(", ") }}</small>{% endif %}
+            </span>
+          </label>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </li>
+      {% else %}
+      <li class="muted">No Workshop items listed yet.</li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Enabled Mod IDs</h2>
+    <p class="muted">Unchecked mods stay downloaded but are not loaded. Extra IDs that are not in a downloaded package can be kept here.</p>
+    {% for mid in orphan_mods %}
+    <label class="check">
+      <input type="checkbox" name="mod_ids" value="{{ mid }}" checked>
+      <span><code>{{ mid }}</code> <small>not found on disk yet</small></span>
+    </label>
+    {% endfor %}
+    {% if downloaded_mods %}
+    <div class="mod-checks">
+      {% for mod in downloaded_mods %}
+        {% if not mod.workshop_id or mod.workshop_id not in workshop_ids %}
+        <label class="check">
+          <input type="checkbox" name="mod_ids" value="{{ mod.mod_id }}" {% if mod.mod_id in enabled_set %}checked{% endif %}>
+          <span><code>{{ mod.mod_id }}</code> {{ mod.name }} <small>local / unmatched package</small></span>
+        </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  {% include "partials/save_bar.html" %}
+</form>
+{% endif %}
+{% endblock %}

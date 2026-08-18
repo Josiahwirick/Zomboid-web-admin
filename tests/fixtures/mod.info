@@ -1,0 +1,5 @@
+name=Cool Weapons
+id=CoolMod
+description=Adds sandbox loot controls.
+require=ModFramework
+poster=poster.png

@@ -1,0 +1,58 @@
+<section id="status-panel" class="status-grid" hx-get="/partials/status" hx-trigger="every 8s" hx-swap="outerHTML">
+  <article class="card stat">
+    <div class="stat-label">Status</div>
+    <div class="stat-value">
+      <span class="pill {% if running %}on{% else %}off{% endif %}">{% if running %}Online{% else %}Offline{% endif %}</span>
+    </div>
+    <div class="muted">{{ public_name }}</div>
+  </article>
+  <article class="card stat">
+    <div class="stat-label">Uptime</div>
+    <div class="stat-value">{{ uptime }}</div>
+    <div class="muted">{% if stats.pid %}pid {{ stats.pid }}{% else %}not running{% endif %}</div>
+  </article>
+  <article class="card stat">
+    <div class="stat-label">CPU / RAM</div>
+    <div class="stat-value">
+      {% if stats.cpu_percent is not none %}{{ stats.cpu_percent }}%{% else %}—{% endif %}
+      /
+      {% if stats.memory_rss_mb is not none %}{{ stats.memory_rss_mb }} MB{% else %}—{% endif %}
+    </div>
+    <div class="muted">{% if stats.memory_percent is not none %}{{ stats.memory_percent }}% of host{% else %}process metrics when online{% endif %}</div>
+  </article>
+  <article class="card stat">
+    <div class="stat-label">Players</div>
+    <div class="stat-value">
+      {% if player_count is not none %}{{ player_count }}{% else %}—{% endif %}
+      {% if max_players %}<span class="muted">/ {{ max_players }}</span>{% endif %}
+    </div>
+    <div class="muted">{% if rcon_ok %}via RCON{% else %}enable RCON in server.ini for a live player list{% endif %}</div>
+  </article>
+
+  <article class="card span-2">
+    <h2>Process control</h2>
+    <p class="muted warn-line">Sandbox and workshop edits are applied with Save and restart. Editing files while the server is running can be overwritten on shutdown.</p>
+    <div class="btn-row">
+      <form method="post" action="/control/start">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn" {% if running %}disabled{% endif %}>Start</button>
+      </form>
+      <form method="post" action="/control/stop" data-confirm="Stop the Project Zomboid server?">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn danger" {% if not running %}disabled{% endif %}>Stop</button>
+      </form>
+      <form method="post" action="/control/restart" data-confirm="Restart the Project Zomboid server now?">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button class="btn primary" {% if not running %}disabled{% endif %}>Restart</button>
+      </form>
+    </div>
+    {% if players %}
+    <h3>Online now</h3>
+    <ul class="plain">
+      {% for name in players %}
+      <li>{{ name }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </article>
+</section>
